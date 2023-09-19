@@ -1,0 +1,19 @@
+FROM node:20.6.1-alpine3.18
+
+ENV VERSION="0.0.7"
+
+RUN apk update && \
+        apk upgrade && \
+        apk add bash && \
+        apk add git && \
+        apk add openjdk17 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community  && \
+        apk add maven --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community
+
+RUN npm i convert-postman-jmeter -g
+
+WORKDIR /usr/app/p2j/source
+RUN git clone https://github.com/MrBlackRaven777/postman2jmeter.git
+WORKDIR /usr/app/p2j/source/postman2jmeter
+RUN mvn package
+RUN cd /usr/app/p2j && cp target/p2j-${version}.jar /usr/app/p2j/p2j-${VERSION}.jar
+ENTRYPOINT ["java","-jar","p2j-${VERSION}.jar"]
