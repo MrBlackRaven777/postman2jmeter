@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>il.blackraven</groupId>
 	<artifactId>postman2jmeter</artifactId>
-	<version>0.0.7</version>
+	<version>0.0.8</version>
 	<name>postman2jmeter</name>
 	<description>Web api to postman-to-jmeter converter</description>
 	<properties>

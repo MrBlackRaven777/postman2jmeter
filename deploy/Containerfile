@@ -1,6 +1,6 @@
 FROM node:20.6.1-alpine3.18
 
-ENV VERSION="0.0.7"
+ENV VERSION="0.0.8"
 
 RUN apk update && \
         apk upgrade && \
@@ -15,5 +15,8 @@ WORKDIR /usr/app/p2j/source
 RUN git clone https://github.com/MrBlackRaven777/postman2jmeter.git
 WORKDIR /usr/app/p2j/source/postman2jmeter
 RUN mvn package
-RUN cd /usr/app/p2j && cp target/p2j-${version}.jar /usr/app/p2j/p2j-${VERSION}.jar
-ENTRYPOINT ["java","-jar","p2j-${VERSION}.jar"]
+WORKDIR /usr/app/p2j
+RUN     cp ./source/postman2jmeter/target/postman2jmeter-${VERSION}.jar /usr/app/p2j/p2j_${VERSION}.jar && \
+        chown root:root /usr/app/p2j/p2j_${VERSION}.jar && \
+        chmod +x /usr/app/p2j/p2j_${VERSION}.jar
+ENTRYPOINT java -jar p2j_${VERSION}.jar
